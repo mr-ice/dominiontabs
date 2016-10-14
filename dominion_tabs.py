@@ -768,6 +768,8 @@ class DominionTabs:
                           help="width of lines for card outlines/crop marks")
         parser.add_option("--read_yaml", action="store_true", dest="read_yaml",
                           help="read yaml version of card definitions and extras")
+        parser.add_option("--card_yaml", type="file",
+                          help="read card size information from a yaml file")
         parser.add_option("--write_yaml", action="store_true", dest="write_yaml",
                           help="write yaml version of card definitions and extras")
         parser.add_option("--tabs-only", action="store_true", dest="tabs_only",
@@ -784,8 +786,7 @@ class DominionTabs:
                           help='centre the tabs on expansion dividers')
         parser.add_option("--num_pages", type="int", default=-1,
                           help="stop generating after this many pages, -1 for all")
-        parser.add_option(
-            "--language", default='en_us', help="language of card texts")
+        parser.add_option("--language", default='en_us', help="language of card texts")
         parser.add_option("--include_blanks", action="store_true",
                           help="include a few dividers with extra text")
         parser.add_option("--exclude_events", action="store_true",
@@ -803,6 +804,9 @@ class DominionTabs:
         fname = None
         if args:
             fname = args[0]
+        if options.card_yaml:
+            if yamldata = yaml.load(options.card_yaml):
+                options = options + yamldata
         return self.generate(options, fname)
 
     def parseDimensions(self, dimensionsStr):

@@ -1,0 +1,74 @@
+---
+# card size, in cm
+card height: 9.8
+card width: 6.0
+
+# tab size, in cm
+tab height: 0.9
+tab width: 4.5
+
+# optimal orientation, from (vertical, portrait, horizontal, landscape)
+orientation: vertical
+
+# paper size, in hxw cm or 'A4' or 'LETTER'
+paper height: 27.94
+paper width: 21.59
+
+# page margin, adjust for your printer
+top margin: 1.0
+side margin: 1.0
+
+# Points to offset the back page to the right; needed for some printers
+back_offset: 0
+
+# If foldmarkers is a list of floating point numbers, print dashed lines
+# at these intervals from the top of the card.
+foldmarkers:
+ - 10.9
+ - 11.6
+
+# label options
+samesidelabels: True   # print all label tabs to be on the same side of the card
+                       # forced on if there are an uneven number of cards across the page
+edge_align_name: False # align the card name to the outside edge of the tab
+                       # ignored if samesidelabels is on
+cost: tab              # where to print the card cost: 'hide','body-top','tab'
+set_icon: tab          # where to print the set icon: 'hide','body-top','tab'
+cropmarks: False       # print crop marks on both sides, rather than tab outlines on one
+linewidth: .1          # width of lines for card outlines/crop marks
+tabs-only: False       # draw only tabs to be printed on labels, no divider outlines
+order: global          # sort order for cards, by 'expansion' or 'global'ly alphabetical
+expansion_dividers: False # add dividers describing each expansion set
+base_cards_with_expansion: False # print base cards dividers with 'Dominion' and 'Intrigue'
+                                  # otherwise base card dividers will only be printed with 'Base'
+centre_expansion_dividers: False # center tabs on expansion dividers
+language: en_us
+include_blanks: False  # include a few dividers with extra text
+exclude_events: False  # exclude individual dividers for events
+
+# Expansion selection
+expansions:
+ - Base
+ - Dominion
+ - Intrigue
+ - Cornucopia
+ - Seaside
+ - Guilds
+ - Adventures
+ - Dark Ages
+ - Promo
+ - Prosperity
+ - Hinterlands
+ - Alchemy
+
+
+# Using custom card size, 11.60cm x 6.00cm
+# Using letter sized paper.
+# Paper dimensions: 21.590000cm (w) x 27.940000cm (h)
+# Tab dimensions: 6.000000cm (w) x 12.500000cm (h)
+# Margins: 1.795000cm h, 1.470000cm v
+
+#                   normal      sleeved
+# card height         9.1          5.9
+# card width          9.4          6.15
+#
