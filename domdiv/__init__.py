@@ -27,25 +27,27 @@ def parse_opts(arglist):
     parser.add_argument('--outfile', default="dominion_dividers.pdf")
     parser.add_argument(
         "--back_offset",
-        type=float,
         dest="back_offset",
+        type=float,
         default=0,
         help="Points to offset the back page to the right; needed for some printers")
     parser.add_argument(
         "--back_offset_height",
-        type=float,
         dest="back_offset_height",
+        type=float,
         default=0,
         help="Points to offset the back page upward; needed for some printers")
-    parser.add_argument("--orientation",
-                        choices=["horizontal", "vertical"],
-                        dest="orientation",
-                        default="horizontal",
-                        help="horizontal or vertical, default:horizontal")
-    parser.add_argument("--sleeved",
-                        action="store_true",
-                        dest="sleeved",
-                        help="use --size=sleeved instead")
+    parser.add_argument(
+        "--orientation",
+        dest="orientation",
+        choices=["horizontal", "vertical"],
+        default="horizontal",
+        help="horizontal or vertical, default:horizontal")
+    parser.add_argument(
+        "--sleeved",
+        dest="sleeved",
+        action="store_true",
+        help="use --size=sleeved instead")
     parser.add_argument(
         "--size",
         dest="size",
@@ -56,14 +58,15 @@ def parse_opts(arglist):
         dest="minmargin",
         default="1x1",
         help="'<%%f>x<%%f>' (size in cm, left/right, top/bottom), default: 1x1")
-    parser.add_argument("--papersize",
-                        dest="papersize",
-                        default=None,
-                        help="'<%%f>x<%%f>' (size in cm), or 'A4', or 'LETTER'")
+    parser.add_argument(
+        "--papersize",
+        dest="papersize",
+        default=None,
+        help="'<%%f>x<%%f>' (size in cm), or 'A4', or 'LETTER'")
     parser.add_argument(
         "--front",
-        choices=TEXT_CHOICES,
         dest="text_front",
+        choices=TEXT_CHOICES,
         default="card",
         help="Text to print on the front of the divider.  choices: card, rules, blank;"
         " 'card' will print the text from the game card;"
@@ -72,8 +75,8 @@ def parse_opts(arglist):
         " default:card")
     parser.add_argument(
         "--back",
-        choices=TEXT_CHOICES + ["none"],
         dest="text_back",
+        choices=TEXT_CHOICES + ["none"],
         default="rules",
         help="Text to print on the back of the divider.  choices: card, rules, blank, none;"
         " 'card' will print the text from the game card;"
@@ -83,8 +86,8 @@ def parse_opts(arglist):
         " default:rules")
     parser.add_argument(
         "--tab_name_align",
-        choices=NAME_ALIGN_CHOICES + ["center"],
         dest="tab_name_align",
+        choices=NAME_ALIGN_CHOICES + ["center"],
         default="left",
         help="Alignment of text on the tab.  choices: left, right, centre (or center), edge."
         " The edge option will align the card name to the outside edge of the"
@@ -94,8 +97,8 @@ def parse_opts(arglist):
         " default:left")
     parser.add_argument(
         "--tab_side",
-        choices=TAB_SIDE_CHOICES,
         dest="tab_side",
+        choices=TAB_SIDE_CHOICES,
         default="right-alternate",
         help="Alignment of tab.  choices: left, right, left-alternate, right-alternate, full;"
         " left/right forces all tabs to left/right side;"
@@ -106,157 +109,195 @@ def parse_opts(arglist):
         " default:right-alternate")
     parser.add_argument(
         "--tabwidth",
+        dest="tabwidth",
         type=float,
         default=4,
         help="width in cm of stick-up tab (ignored if tab_side is full or tabs-only is used)")
-    parser.add_argument("--cost",
-                        action="append",
-                        choices=LOCATION_CHOICES,
-                        default=[],
-                        help="where to display the card cost; may be set to"
-                        " 'hide' to indicate it should not be displayed, or"
-                        " given multiple times to show it in multiple"
-                        " places; valid values are: %s; defaults to 'tab'" %
-                        ", ".join("'%s'" % x for x in LOCATION_CHOICES))
-    parser.add_argument("--set_icon",
-                        action="append",
-                        choices=LOCATION_CHOICES,
-                        default=[],
-                        help="where to display the set icon; may be set to"
-                        " 'hide' to indicate it should not be displayed, or"
-                        " given multiple times to show it in multiple"
-                        " places; valid values are: %s; defaults to 'tab'" %
-                        ", ".join("'%s'" % x for x in LOCATION_CHOICES))
+    parser.add_argument(
+        "--cost",
+        dest="cost",
+        action="append",
+        choices=LOCATION_CHOICES,
+        default=[],
+        help="where to display the card cost; may be set to"
+        " 'hide' to indicate it should not be displayed, or"
+        " given multiple times to show it in multiple"
+        " places; valid values are: %s; defaults to 'tab'" %
+        ", ".join("'%s'" % x for x in LOCATION_CHOICES))
+    parser.add_argument(
+        "--set_icon",
+        dest="set_icon",
+        action="append",
+        choices=LOCATION_CHOICES,
+        default=[],
+        help="where to display the set icon; may be set to"
+        " 'hide' to indicate it should not be displayed, or"
+        " given multiple times to show it in multiple"
+        " places; valid values are: %s; defaults to 'tab'" %
+        ", ".join("'%s'" % x for x in LOCATION_CHOICES))
     parser.add_argument(
         "--expansions",
+        dest="expansions",
         action="append",
         help="subset of dominion expansions to produce tabs for")
     parser.add_argument(
         "--cropmarks",
-        action="store_true",
         dest="cropmarks",
+        action="store_true",
         help="print crop marks on both sides, rather than tab outlines on one")
-    parser.add_argument("--linewidth",
-                        type=float,
-                        default=.1,
-                        help="width of lines for card outlines/crop marks")
+    parser.add_argument(
+        "--linewidth",
+        dest="linewidth",
+        type=float,
+        default=.1,
+        help="width of lines for card outlines/crop marks")
     parser.add_argument(
         "--write_json",
-        action="store_true",
         dest="write_json",
+        action="store_true",
         help="write json version of card definitions and extras")
     parser.add_argument(
-        "--tabs-only",
+        "--outline-only",
+        dest="outline_only",
         action="store_true",
+        help="draw only outlines to be printed on labels, e.g. to feed to automatic cutters")
+    parser.add_argument(
+        "--tabs-only",
         dest="tabs_only",
+        action="store_true",
         help="draw only tabs to be printed on labels, no divider outlines")
     parser.add_argument(
         "--order",
-        choices=["expansion", "global", "colour"],
         dest="order",
+        choices=["expansion", "global", "colour", "cost", "alphabetically"],
         help="sort order for the cards, whether by expansion or globally alphabetical")
-    parser.add_argument("--expansion_dividers",
-                        action="store_true",
-                        dest="expansion_dividers",
-                        help="add dividers describing each expansion set")
+    parser.add_argument(
+        "--expansion_dividers",
+         dest="expansion_dividers",
+         action="store_true",
+         help="add dividers describing each expansion set")
     parser.add_argument(
         "--base_cards_with_expansion",
+        dest="base_cards_with_expansion",
         action="store_true",
         help='print the base cards as part of the expansion; ie, a divider for "Silver"'
         ' will be printed as both a "Dominion" card and as an "Intrigue" card; if this'
         ' option is not given, all base cards are placed in their own "Base" expansion')
-    parser.add_argument("--centre_expansion_dividers",
-                        action="store_true",
-                        dest="centre_expansion_dividers",
-                        help='centre the tabs on expansion dividers')
+    parser.add_argument(
+        "--centre_expansion_dividers",
+        dest="centre_expansion_dividers",
+        action="store_true",
+        help='centre the tabs on expansion dividers')
     parser.add_argument(
         "--num_pages",
+        dest="num_pages",
         type=int,
         default=-1,
         help="stop generating after this many pages, -1 for all")
-    parser.add_argument("--language",
-                        default='en_us',
-                        help="language of card texts")
-    parser.add_argument("--include_blanks",
-                        action="store_true",
-                        help="include a few dividers with extra text")
-    parser.add_argument("--exclude_events",
-                        action="store_true",
-                        help="exclude individual dividers for events")
-    parser.add_argument("--exclude_landmarks",
-                        action="store_true",
-                        help="exclude individual dividers for landmarks")
+    parser.add_argument(
+        "--language",
+        dest="language",
+        default='en_us',
+        help="language of card texts")
+    parser.add_argument(
+        "--include_blanks",
+        dest="include_blanks",
+        action="store_true",
+        help="include a few dividers with extra text")
+    parser.add_argument(
+        "--exclude_events",
+        dest="exclude_events",
+        action="store_true",
+        help="exclude individual dividers for events")
+    parser.add_argument(
+        "--exclude_landmarks",
+        dest="exclude_landmarks",
+        action="store_true",
+        help="exclude individual dividers for landmarks")
     parser.add_argument(
         "--special_card_groups",
+        dest="special_card_groups",
         action="store_true",
         help="group some cards under special dividers (e.g. Shelters, Prizes)")
     parser.add_argument(
         "--exclude_prizes",
+        dest="exclude_prizes",
         action="store_true",
         help="exclude individual dividers for prizes (cornucopia)")
     parser.add_argument(
         "--cardlist",
         dest="cardlist",
         help="Path to file that enumerates each card to be printed on its own line.")
-    parser.add_argument("--no-tab-artwork",
-                        action="store_true",
-                        dest="no_tab_artwork",
-                        help="don't show background artwork on tabs")
+    parser.add_argument(
+        "--no-tab-artwork",
+        dest="no_tab_artwork",
+        action="store_true",
+        help="don't show background artwork on tabs")
     parser.add_argument(
         "--use-text-set-icon",
-        action="store_true",
         dest="use_text_set_icon",
+        action="store_true",
         help="use text/letters to represent a card's set instead of the set icon")
     parser.add_argument(
         "--no-page-footer",
-        action="store_true",
         dest="no_page_footer",
+        action="store_true",
         help="don't print the set name at the bottom of the page.")
-    parser.add_argument("--horizontal_gap",
-                        type=float,
-                        default=0.,
-                        help="horizontal gap between dividers in centimeters")
-    parser.add_argument("--vertical_gap",
-                        type=float,
-                        default=0.,
-                        help="vertical gap between dividers in centimeters")
-    parser.add_argument("--count",
-                        action="store_true",
-                        dest="count",
-                        help="Display card count on body of the divider.")
+    parser.add_argument(
+        "--horizontal_gap",
+        dest="horizontal_gap",
+        type=float,
+        default=0.,
+        help="horizontal gap between dividers in centimeters")
+    parser.add_argument(
+        "--vertical_gap",
+        dest="vertical_gap",
+        type=float,
+        default=0.,
+        help="vertical gap between dividers in centimeters")
+    parser.add_argument(
+        "--count",
+        dest="count",
+        action="store_true",
+        help="Display card count on body of the divider.")
     parser.add_argument(
         "--wrapper",
-        action="store_true",
         dest="wrapper",
+        action="store_true",
         help="Draw wrapper for cards instead of a divider for the cards")
     parser.add_argument(
         "--thickness",
+        dest="thickness",
         type=float,
         default=2.0,
         help="Thickness of a stack of 60 cards (Copper) in centimeters."
         " Typically unsleeved cards are 2.0, thin sleeved cards are 2.4, and thick sleeved cards are 3.2."
         " This is only valid with the --wrapper option."
         " default:2.0")
-    parser.add_argument("--sleeved_thick",
-                        action="store_true",
-                        dest="sleeved_thick",
-                        help="same as --size=sleeved --thickness 3.2")
-    parser.add_argument("--sleeved_thin",
-                        action="store_true",
-                        dest="sleeved_thin",
-                        help="same as --size=sleeved --thickness 2.4")
+    parser.add_argument(
+        "--sleeved_thick",
+        dest="sleeved_thick",
+        action="store_true",
+        help="same as --size=sleeved --thickness 3.2")
+    parser.add_argument(
+        "--sleeved_thin",
+        dest="sleeved_thin",
+        action="store_true",
+        help="same as --size=sleeved --thickness 2.4")
     parser.add_argument(
         "--notch_length",
+        dest="notch_length",
         type=float,
         default=0.0,
         help="Length of thumb notch on wrapper in centimeters."
         " This can make it easier to remove the cards from the wrapper."
         " This is only valid with the --wrapper option."
         " default:0.0 (i.e., no notch on wrapper)")
-    parser.add_argument("--notch",
-                        action="store_true",
-                        dest="notch",
-                        help="same as --notch_length thickness 1.5")
+    parser.add_argument(
+        "--notch",
+        dest="notch",
+        action="store_true",
+        help="same as --notch_length thickness 1.5")
 
     options = parser.parse_args(arglist)
     if not options.cost:
