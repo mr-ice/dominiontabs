@@ -226,7 +226,7 @@ class DividerDrawer(object):
         text = re.sub('Debt', replace, text)
         replace = '<img src=' "'%s/potion_small.png'" ' width=%d height=' "'100%%'" ' valign=' "'middle'" '/>'
         replace = replace % (path, fontsize * 1.2)
-        text = re.sub('Potion', replace, text)
+        text = re.sub('(\d+\s*)?(p|P)otion(s)?', replace, text)
         return text
 
     def drawOutline(self,
